@@ -1,61 +1,63 @@
-local player = game.Players.LocalPlayer
+-- Cria a ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- Função para criar a GUI de seleção de idioma
-function createLanguageSelectionGUI()
-    local ScreenGui = Instance.new("ScreenGui")
-    local Frame = Instance.new("Frame")
-    local TitleLabel = Instance.new("TextLabel")
-    local EnglishButton = Instance.new("TextButton")
-    local SpanishButton = Instance.new("TextButton")
+-- Cria o Frame principal
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 300, 0, 200)
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+mainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+mainFrame.Parent = screenGui
 
-    ScreenGui.Parent = player:WaitForChild("PlayerGui")
-    Frame.Parent = ScreenGui
-    Frame.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1) -- Cor de fundo semelhante ao Blox Fruits
-    Frame.Size = UDim2.new(0, 400, 0, 300)
-    Frame.Position = UDim2.new(0.5, -200, 0.5, -150)
-    Frame.BorderSizePixel = 0
-    Frame.BackgroundTransparency = 0.5
+-- Cria o texto da pergunta
+local questionLabel = Instance.new("TextLabel")
+questionLabel.Size = UDim2.new(1, 0, 0.5, 0)
+questionLabel.Position = UDim2.new(0, 0, 0, 0)
+questionLabel.Text = "O Palmeiras Tem Mundial?"
+questionLabel.TextScaled = true
+questionLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+questionLabel.Parent = mainFrame
 
-    TitleLabel.Parent = Frame
-    TitleLabel.Text = "English or Spanish?"
-    TitleLabel.Size = UDim2.new(1, 0, 0.3, 0)
-    TitleLabel.Position = UDim2.new(0, 0, 0.1, 0)
-    TitleLabel.TextColor3 = Color3.new(1, 1, 1)
-    TitleLabel.BackgroundTransparency = 1
-    TitleLabel.Font = Enum.Font.SourceSansBold
-    TitleLabel.TextSize = 28
+-- Cria o botão "Sim"
+local yesButton = Instance.new("TextButton")
+yesButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+yesButton.Position = UDim2.new(0.1, 0, 0.6, 0)
+yesButton.Text = "Sim"
+yesButton.TextScaled = true
+yesButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+yesButton.Parent = mainFrame
 
-    EnglishButton.Parent = Frame
-    EnglishButton.Text = "English"
-    EnglishButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-    EnglishButton.Position = UDim2.new(0.1, 0, 0.5, 0)
-    EnglishButton.BackgroundColor3 = Color3.new(0.2, 0.8, 0.2)
-    EnglishButton.TextColor3 = Color3.new(1, 1, 1)
-    EnglishButton.Font = Enum.Font.SourceSansBold
-    EnglishButton.TextSize = 24
-    EnglishButton.BorderSizePixel = 0
+-- Cria o botão "Não"
+local noButton = Instance.new("TextButton")
+noButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+noButton.Position = UDim2.new(0.5, 0, 0.6, 0)
+noButton.Text = "Não"
+noButton.TextScaled = true
+noButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+noButton.Parent = mainFrame
 
-    SpanishButton.Parent = Frame
-    SpanishButton.Text = "Spanish"
-    SpanishButton.Size = UDim2.new(0.8, 0, 0.2, 0)
-    SpanishButton.Position = UDim2.new(0.1, 0, 0.75, 0)
-    SpanishButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.8)
-    SpanishButton.TextColor3 = Color3.new(1, 1, 1)
-    SpanishButton.Font = Enum.Font.SourceSansBold
-    SpanishButton.TextSize = 24
-    SpanishButton.BorderSizePixel = 0
+-- Função para criar a resposta
+local function createResponse(text)
+    local responseFrame = Instance.new("Frame")
+    responseFrame.Size = UDim2.new(0, 300, 0, 200)
+    responseFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+    responseFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    responseFrame.Parent = screenGui
 
-    -- Conectar funções aos botões
-    EnglishButton.MouseButton1Click:Connect(function()
-        print("English selected")
-        -- Aqui você pode adicionar a lógica para iniciar a missão em inglês
-    end)
-
-    SpanishButton.MouseButton1Click:Connect(function()
-        print("Spanish selected")
-        -- Aqui você pode adicionar a lógica para iniciar a missão em espanhol
-    end)
+    local responseLabel = Instance.new("TextLabel")
+    responseLabel.Size = UDim2.new(1, 0, 1, 0)
+    responseLabel.Position = UDim2.new(0, 0, 0, 0)
+    responseLabel.Text = text
+    responseLabel.TextScaled = true
+    responseLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    responseLabel.Parent = responseFrame
 end
 
--- Chama a função para criar a GUI de seleção de idioma
-createLanguageSelectionGUI()
+-- Conecta os botões às funções
+yesButton.MouseButton1Click:Connect(function()
+    createResponse("Você acertou!")
+end)
+
+noButton.MouseButton1Click:Connect(function()
+    createResponse("Você errou!")
+end)
